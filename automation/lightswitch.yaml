@@ -28,13 +28,13 @@ action:
         sequence:
           - service: light.turn_on
             target:
-              entity_id: light_device        
+              entity_id: bulb        
       - conditions:
           - "{{ command == 'off' }}"
         sequence:
           - service: light.turn_off
             target:
-              entity_id: light_device 
+              entity_id: bulb 
       - conditions:
           - "{{ command == 'brightness_move_up' }}"
         sequence:
@@ -42,9 +42,7 @@ action:
             entity_id: light_devic
             data_template:
               brightness: >-
-                {{ state_attr('light_device
-',
-                'brightness')|int + 15}}
+                {{ state_attr('bulb','brightness')|int + 15}}
       - conditions:
           - "{{ command == 'brightness_move_down' }}"
         sequence:
@@ -52,9 +50,7 @@ action:
             entity_id: light_devic
             data_template:
               brightness: >-
-                {{ state_attr('light_device
-',
-                'brightness')|int + 15}}
+                {{ state_attr('bulb','brightness')|int + 15}}
       - conditions:
           - "{{ command == 'arrow_left_click' }}"
         sequence:
@@ -62,9 +58,7 @@ action:
             entity_id: light_devic
             data_template:
               color_temp_kelvin: >-
-                {{ state_attr('light_device
-',
-                'color_temp_kelvin')|int + 150}}
+                {{ state_attr('bulb','color_temp_kelvin')|int + 150}}
       - conditions:
           - "{{ command == 'arrow_right_click' }}"
         sequence:
@@ -72,7 +66,5 @@ action:
             entity_id: light_devic
             data_template:
               color_temp_kelvin: >-
-                {{ state_attr('light_device
-',
-                'color_temp_kelvin')|int - 150}}
+                {{ state_attr('bulb','color_temp_kelvin')|int - 150}}
 mode: single
