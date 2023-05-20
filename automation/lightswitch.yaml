@@ -1,0 +1,78 @@
+blueprint:
+  name: Motion Light Tutorial
+  description: Turn a light on based on detected motion
+  domain: automation
+  input:
+    light_control: 
+      name: Remote
+      selector:
+        entity:
+          domain: sensor
+    light_device:
+      name: Bulb
+      selector:
+        entity:
+          domain: light
+trigger:
+  - platform: state
+    entity_id:
+      - !input ligh_control
+condition: []
+action:
+  - variables:
+      command: "{{ trigger.to_state.state }}"
+      bulb: !input light_device
+  - choose:
+      - conditions:
+          - "{{ command == 'on' }}"
+        sequence:
+          - service: light.turn_on
+            target:
+              entity_id: light_device        
+      - conditions:
+          - "{{ command == 'off' }}"
+        sequence:
+          - service: light.turn_off
+            target:
+              entity_id: light_device 
+      - conditions:
+          - "{{ command == 'brightness_move_up' }}"
+        sequence:
+          - service: light.turn_on
+            entity_id: light_devic
+            data_template:
+              brightness: >-
+                {{ state_attr('light_device
+',
+                'brightness')|int + 15}}
+      - conditions:
+          - "{{ command == 'brightness_move_down' }}"
+        sequence:
+          - service: light.turn_on
+            entity_id: light_devic
+            data_template:
+              brightness: >-
+                {{ state_attr('light_device
+',
+                'brightness')|int + 15}}
+      - conditions:
+          - "{{ command == 'arrow_left_click' }}"
+        sequence:
+          - service: light.turn_on
+            entity_id: light_devic
+            data_template:
+              color_temp_kelvin: >-
+                {{ state_attr('light_device
+',
+                'color_temp_kelvin')|int + 150}}
+      - conditions:
+          - "{{ command == 'arrow_right_click' }}"
+        sequence:
+          - service: light.turn_on
+            entity_id: light_devic
+            data_template:
+              color_temp_kelvin: >-
+                {{ state_attr('light_device
+',
+                'color_temp_kelvin')|int - 150}}
+mode: single
