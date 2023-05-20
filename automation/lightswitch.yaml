@@ -21,50 +21,49 @@ condition: []
 action:
   - variables:
       command: "{{ trigger.to_state.state }}"
-      bulb: !input light_device
   - choose:
       - conditions:
           - "{{ command == 'on' }}"
         sequence:
           - service: light.turn_on
             target:
-              entity_id: bulb        
+              entity_id: !input light_device        
       - conditions:
           - "{{ command == 'off' }}"
         sequence:
           - service: light.turn_off
             target:
-              entity_id: bulb 
+              entity_id: !input light_device 
       - conditions:
           - "{{ command == 'brightness_move_up' }}"
         sequence:
           - service: light.turn_on
-            entity_id: bulb
+            entity_id: !input light_device
             data_template:
               brightness: >-
-                {{ state_attr('bulb','brightness')|int + 15}}
+                {{ state_attr('!input light_device','brightness')|int + 15}}
       - conditions:
           - "{{ command == 'brightness_move_down' }}"
         sequence:
           - service: light.turn_on
-            entity_id: bulb
+            entity_id: !input light_device
             data_template:
               brightness: >-
-                {{ state_attr('bulb','brightness')|int + 15}}
+                {{ state_attr('!input light_device','brightness')|int + 15}}
       - conditions:
           - "{{ command == 'arrow_left_click' }}"
         sequence:
           - service: light.turn_on
-            entity_id: bulb
+            entity_id: !input light_device
             data_template:
               color_temp_kelvin: >-
-                {{ state_attr('bulb','color_temp_kelvin')|int + 150}}
+                {{ state_attr('!input light_device','color_temp_kelvin')|int + 150}}
       - conditions:
           - "{{ command == 'arrow_right_click' }}"
         sequence:
           - service: light.turn_on
-            entity_id: bulb
+            entity_id: !input light_device
             data_template:
               color_temp_kelvin: >-
-                {{ state_attr('bulb','color_temp_kelvin')|int - 150}}
+                {{ state_attr('!input light_device','color_temp_kelvin')|int - 150}}
 mode: single
