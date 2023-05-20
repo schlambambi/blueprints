@@ -49,7 +49,7 @@ action:
             entity_id: !input light_device
             data_template:
               brightness: >-
-                {{ state_attr('!input light_device','brightness')|int + 15}}
+                {{ state_attr('!input light_device','brightness')|int - 15}}
       - conditions:
           - "{{ command == 'arrow_left_click' }}"
         sequence:
