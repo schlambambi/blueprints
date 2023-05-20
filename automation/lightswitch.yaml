@@ -3,7 +3,7 @@ blueprint:
   description: Turn a light on based on detected motion
   domain: automation
   input:
-    light_control: 
+    light_controll: 
       name: Remote
       selector:
         entity:
@@ -16,7 +16,7 @@ blueprint:
 trigger:
   - platform: state
     entity_id:
-      - !input ligh_control
+      - !input light_controll
 condition: []
 action:
   - variables:
